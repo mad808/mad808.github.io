@@ -15,13 +15,6 @@ I am a 20-year-old developer based in Ashgabat, Turkmenistan, passionate about b
 
 ---
 
-### 📊 GitHub Stats
-
-![Eziz's GitHub stats](https://github-readme-stats.vercel.app/api?username=mad808&show_icons=true&theme=tokyonight)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=mad808&layout=compact&theme=tokyonight)
-
----
-
 ### 📬 Contact Me
 
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white)](https://www.instagram.com/e_sopyev?igsh=MW5nMTI3eWl0bmN6dA==)
