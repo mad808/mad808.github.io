@@ -1,1 +1,65 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eziz Sopyyev | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0f172a; color: #f1f5f9; }
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <nav class="p-6 flex justify-between items-center max-w-5xl mx-auto">
+        <h1 class="text-2xl font-bold gradient-text">ES.</h1>
+        <div class="space-x-6">
+            <a href="#about" class="hover:text-sky-400 transition">About</a>
+            <a href="#projects" class="hover:text-sky-400 transition">Projects</a>
+            <a href="mailto:mad300905@gmail.com" class="bg-sky-500 px-4 py-2 rounded-lg hover:bg-sky-600 transition">Contact</a>
+        </div>
+    </nav>
+
+    <section id="about" class="max-w-5xl mx-auto mt-20 px-6 text-center">
+        <h2 class="text-5xl font-extrabold mb-4">Hi, I'm <span class="gradient-text">Eziz Sopyyev</span></h2>
+        <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+            A 20-year-old Full-stack Developer from Ashgabat. I build scalable web applications using Laravel & React.
+        </p>
+        <div class="mt-8 space-x-4">
+            <a href="https://github.com/mad808" class="text-3xl hover:text-sky-400"><i class="fab fa-github"></i></a>
+            <a href="https://t.me/S_EZIZ" class="text-3xl hover:text-sky-400"><i class="fab fa-telegram"></i></a>
+            <a href="https://www.instagram.com/e_sopyev" class="text-3xl hover:text-sky-400"><i class="fab fa-instagram"></i></a>
+        </div>
+    </section>
+
+    <section id="projects" class="max-w-5xl mx-auto mt-32 px-6 pb-20">
+        <h3 class="text-3xl font-bold mb-10 border-b border-slate-700 pb-2">Featured Projects</h3>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:border-sky-500 transition shadow-xl">
+                <div class="text-sky-400 mb-2"><i class="fas fa-shopping-cart text-2xl"></i></div>
+                <h4 class="text-2xl font-bold mb-2">E-Commerce Market</h4>
+                <p class="text-slate-400 mb-4">A full-stack online market system built with Laravel 11 and Livewire. Features real-time chat and admin dashboard.</p>
+                <div class="flex space-x-2">
+                    <span class="bg-slate-700 px-3 py-1 rounded-full text-xs">Laravel</span>
+                    <span class="bg-slate-700 px-3 py-1 rounded-full text-xs">Livewire</span>
+                    <span class="bg-slate-700 px-3 py-1 rounded-full text-xs">MySQL</span>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 opacity-50 border-dashed flex flex-col justify-center items-center">
+                <p class="text-slate-500 italic">New projects coming soon...</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center py-10 text-slate-500 text-sm">
+        © 2025 Eziz Sopyyev. Built with TailwindCSS & GitHub Pages.
+    </footer>
+</body>
+</html>
