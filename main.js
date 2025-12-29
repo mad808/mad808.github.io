@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         tk: {
             navHome: "Baş sahypa", navAbout: "Hakkymda", navSkills: "Başarnyklar", navProjects: "Taslamalar", navContact: "Habarlaşmak",
-            heroTitle: "Salam, men Atamyrat", heroSubtitle: "Men", heroQuote: "Meniň gyzyklanmam, adamyň durmuşyny gowulaşdyryp biljek peýdaly programma üpjünçiligini döretmek we ösdürmek.", heroButton: "Habarlaşalyň",
+            heroTitle: "Salam, men Abdyleziz", heroSubtitle: "Men", heroQuote: "Meniň gyzyklanmam, adamyň durmuşyny gowulaşdyryp biljek peýdaly programma üpjünçiligini döretmek we ösdürmek.", heroButton: "Habarlaşalyň",
             aboutTitle: "Hakkymda", aboutHeader: "Full-Stack Programmist we Python JANKÖYERI", aboutSubheader: "Frontend we backend tehnologiýalarynda güýçli binýady bolan höwesli programmist.", aboutParagraph: "Meniň ýolum Python bilen başlady, stol programmalaryndan başlap gyzykly oýunlara çenli hemme zady gurup. Şondan soň Django bilen doly web programmirlemä geçdim, berk we giňeldilip bilinýän programmalary döretdim. Men täze tehnologiýalary öwrenmekden we çylşyrymly meseleleri çözmekden lezzet alýaryn, hemişe oňyn täsir edýän manyly programmalary gurmagy maksat edinýärin.", aboutButton: "CV ýükläp al",
             skillsTitle: "Meniň Başarnyklarym",
             projectsTitle: "Meniň Taslamalarym", projectsProduction: "Işleýän Saýtlar", projectsOther: "Beýleki Taslamalar we Landing Sahypalar", viewProject: "Taslama seret", visitLiveSite: "Saýta gir",
@@ -108,3 +108,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
