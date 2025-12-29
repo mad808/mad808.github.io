@@ -7,23 +7,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const translations = {
         en: {
             navHome: "Home", navAbout: "About", navSkills: "Skills", navProjects: "Projects", navContact: "Contact",
-            heroTitle: "Hello, I'm Atamyrat", heroSubtitle: "I'm a", heroQuote: "My interest is to create and develop useful software that can make a person's life better.", heroButton: "Let's Connect",
+            heroTitle: "Hello, I'm Abdyleziz", heroSubtitle: "I'm a", heroQuote: "My interest is to create and develop useful software that can make a person's life better.", heroButton: "Let's Connect",
             aboutTitle: "About Me", aboutHeader: "Full-Stack Developer & Python Enthusiast", aboutSubheader: "A passionate developer with a strong foundation in both front-end and back-end technologies.", aboutParagraph: "My journey started with Python, building everything from desktop apps to fun games. I've since expanded into full-stack web development with Django, creating robust and scalable applications. I thrive on learning new technologies and solving complex problems, always aiming to build meaningful applications that have a positive impact.", aboutButton: "Download CV",
             skillsTitle: "My Skills",
             projectsTitle: "My Projects", projectsProduction: "Production Sites", projectsOther: "Other Projects & Landing Pages", viewProject: "View Project", visitLiveSite: "Visit Live Site",
             contactTitle: "Contact Me", contactSubtitle: "Have a question or want to work together? Let's talk.", contactEmail: "Email", contactPhone: "Phone", contactLocation: "Location",
             formName: "Your Name", formEmail: "Your Email", formPhone: "Your Phone (Optional)", formSubject: "Subject", formMessage: "Message", formButton: "Send Message", // ADDED formPhone
-            footerCopyright: "© Copyright <strong><span>Atamyrat</span></strong>. All Rights Reserved"
+            footerCopyright: "© Copyright <strong><span>Abdyleziz</span></strong>. All Rights Reserved"
         },
         ru: {
             navHome: "Главная", navAbout: "Обо мне", navSkills: "Навыки", navProjects: "Проекты", navContact: "Контакты",
-            heroTitle: "Привет, я Атамурат", heroSubtitle: "Я", heroQuote: "Мой интерес — создавать и разрабатывать полезное программное обеспечение, которое может улучшить жизнь человека.", heroButton: "Связаться",
+            heroTitle: "Привет, я Абдулазиз", heroSubtitle: "Я", heroQuote: "Мой интерес — создавать и разрабатывать полезное программное обеспечение, которое может улучшить жизнь человека.", heroButton: "Связаться",
             aboutTitle: "Обо мне", aboutHeader: "Full-Stack Разработчик и Энтузиаст Python", aboutSubheader: "Увлеченный разработчик с прочными знаниями в области фронтенд и бэкенд технологий.", aboutParagraph: "Мой путь начался с Python, создавая всё от десктопных приложений до игр. Затем я перешел к full-stack веб-разработке на Django, создавая надежные и масштабируемые приложения. Я стремлюсь изучать новые технологии и решать сложные задачи, всегда нацеливаясь на создание значимых приложений, которые оказывают положительное влияние.", aboutButton: "Скачать резюме",
             skillsTitle: "Мои навыки",
             projectsTitle: "Мои проекты", projectsProduction: "Рабочие сайты", projectsOther: "Другие проекты и лендинги", viewProject: "Посмотреть проект", visitLiveSite: "Посетить сайт",
             contactTitle: "Свяжитесь со мной", contactSubtitle: "Есть вопрос или хотите поработать вместе? Давайте обсудим.", contactEmail: "Эл. почта", contactPhone: "Телефон", contactLocation: "Местоположение",
             formName: "Ваше имя", formEmail: "Ваша эл. почта", formPhone: "Ваш телефон (необязательно)", formSubject: "Тема", formMessage: "Сообщение", formButton: "Отправить сообщение", // ADDED formPhone
-            footerCopyright: "© Все права защищены, <strong><span>Атамурат</span></strong>."
+            footerCopyright: "© Все права защищены, <strong><span>Абдулазиз</span></strong>."
         },
         tk: {
             navHome: "Baş sahypa", navAbout: "Hakkymda", navSkills: "Başarnyklar", navProjects: "Taslamalar", navContact: "Habarlaşmak",
@@ -106,4 +106,5 @@ document.addEventListener('DOMContentLoaded', () => {
         "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "repulse": { "distance": 100 }, "push": { "particles_nb": 4 } } },
         "retina_detect": true
     });
+
 });
