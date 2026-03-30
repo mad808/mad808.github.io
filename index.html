@@ -1,377 +1,876 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abdyleziz | Portfolio</title>
-    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
-    <!-- Libs and Fonts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abdyleziz Sopyyev — Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1e1e1e;
+      --accent: #00e5a0;
+      --accent2: #0066ff;
+      --text: #e8e8e8;
+      --muted: #666;
+      --mono: 'Space Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 4rem;
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s, background .3s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,.92);
+      backdrop-filter: blur(12px);
+      border-color: var(--border);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: .85rem;
+      color: var(--accent);
+      letter-spacing: .08em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: .75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* SECTIONS */
+    section { position: relative; z-index: 1; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 4rem;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: .75rem;
+      color: var(--accent);
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp .6s .2s ease forwards;
+    }
+    .hero-name {
+      font-family: var(--mono);
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp .6s .35s ease forwards;
+    }
+    .hero-name span { color: var(--accent); }
+    .hero-role {
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      max-width: 38ch;
+      opacity: 0;
+      animation: fadeUp .6s .5s ease forwards;
+    }
+    .hero-role strong { color: var(--text); font-weight: 500; }
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp .6s .65s ease forwards;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .85rem 2rem;
+      background: var(--accent);
+      color: #000;
+      font-family: var(--mono);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,229,160,.2);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .85rem 2rem;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: .8rem;
+      letter-spacing: .05em;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* HERO RIGHT — terminal card */
+    .terminal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp .7s .5s ease forwards;
+    }
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 1rem;
+      background: #161616;
+      border-bottom: 1px solid var(--border);
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.r { background: #ff5f57; }
+    .dot.y { background: #febc2e; }
+    .dot.g { background: #28c840; }
+    .terminal-filename { font-family: var(--mono); font-size: .7rem; color: var(--muted); margin-left: .5rem; }
+    .terminal-body { padding: 1.5rem; font-family: var(--mono); font-size: .78rem; line-height: 1.9; }
+    .t-comment { color: #444; }
+    .t-key { color: #7ecfff; }
+    .t-str { color: var(--accent); }
+    .t-arr { color: #f8a97d; }
+    .t-num { color: #ff9580; }
+    .t-bool { color: #c792ea; }
+
+    /* ABOUT */
+    #about {
+      padding: 8rem 4rem;
+      border-top: 1px solid var(--border);
+    }
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .section-label {
+      font-family: var(--mono);
+      font-size: .7rem;
+      color: var(--accent);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .section-heading {
+      font-family: var(--mono);
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .about-text p {
+      color: #aaa;
+      font-size: 1.05rem;
+      margin-bottom: 1.2rem;
+      max-width: 60ch;
+    }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .stat-row {
+      display: flex;
+      gap: 3rem;
+      margin-top: 2.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: .85rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .08em;
+    }
+
+    /* SKILLS */
+    #skills {
+      padding: 8rem 4rem;
+      border-top: 1px solid var(--border);
+    }
+    .skills-inner { max-width: 1200px; margin: 0 auto; }
+    .skills-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .skill-card {
+      background: var(--bg);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      transition: background .2s;
+      cursor: default;
+    }
+    .skill-card:hover { background: var(--surface); }
+    .skill-icon-text {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+    .skill-name {
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--text);
+      letter-spacing: .04em;
+    }
+    .skill-type {
+      font-size: .72rem;
+      color: var(--muted);
+    }
+    .skill-bar { height: 2px; background: var(--border); margin-top: .5rem; }
+    .skill-bar-fill { height: 100%; background: var(--accent); transition: width .6s ease; }
+
+    /* PROJECT */
+    #projects {
+      padding: 8rem 4rem;
+      border-top: 1px solid var(--border);
+    }
+    .projects-inner { max-width: 1200px; margin: 0 auto; }
+    .projects-header { margin-bottom: 4rem; }
+    .project-feature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .project-info {
+      padding: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.2rem;
+    }
+    .project-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .12em;
+      color: var(--accent);
+      background: rgba(0,229,160,.06);
+      border: 1px solid rgba(0,229,160,.2);
+      padding: .3rem .7rem;
+      width: fit-content;
+    }
+    .project-title {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .project-desc {
+      color: #999;
+      font-size: .97rem;
+      line-height: 1.8;
+      max-width: 42ch;
+    }
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: .5rem;
+    }
+    .tech-badge {
+      font-family: var(--mono);
+      font-size: .68rem;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: .25rem .65rem;
+      letter-spacing: .05em;
+    }
+    .tech-badge:first-child { border-color: var(--accent2); color: var(--accent2); }
+    .project-links { display: flex; gap: 1rem; margin-top: .5rem; }
+    .project-visual {
+      background: #0d0d0d;
+      border-left: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem;
+      min-height: 420px;
+    }
+    .browser-mockup {
+      width: 100%;
+      max-width: 460px;
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+    }
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .65rem 1rem;
+      background: #1c1c1c;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .browser-dots { display: flex; gap: .35rem; }
+    .browser-dots span { width: 9px; height: 9px; border-radius: 50%; }
+    .browser-url {
+      flex: 1;
+      background: #252525;
+      border: 1px solid #333;
+      border-radius: 3px;
+      padding: .3rem .7rem;
+      font-family: var(--mono);
+      font-size: .65rem;
+      color: #666;
+      text-align: center;
+    }
+    .browser-content {
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Simulated Online Market screenshot */
+    .om-sim {
+      background: #fff;
+      min-height: 300px;
+      font-size: 0;
+    }
+    .om-header-sim {
+      background: #1a1a2e;
+      padding: .4rem .8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .om-logo-sim { font-family: var(--mono); font-size: .65rem; color: #00e5a0; }
+    .om-nav-sim { display: flex; gap: .5rem; }
+    .om-nav-sim span { font-size: .5rem; color: #888; }
+    .om-hero-sim {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      padding: 1.2rem .8rem;
+      text-align: center;
+    }
+    .om-title-sim { font-family: var(--mono); font-size: .7rem; color: #fff; margin-bottom: .3rem; }
+    .om-sub-sim { font-size: .55rem; color: #00e5a0; margin-bottom: .8rem; }
+    .om-cats-sim { display: flex; justify-content: center; gap: .5rem; flex-wrap: wrap; }
+    .om-cat { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); border-radius: 3px; padding: .2rem .5rem; font-size: .5rem; color: #ccc; }
+    .om-products-sim { padding: .8rem; background: #f5f5f5; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .4rem; }
+    .om-product { background: #fff; border: 1px solid #eee; border-radius: 3px; padding: .4rem; }
+    .om-product-img { height: 30px; background: linear-gradient(135deg, #e0e0e0, #f0f0f0); border-radius: 2px; margin-bottom: .25rem; }
+    .om-product-name { font-size: .5rem; color: #333; margin-bottom: .15rem; }
+    .om-product-price { font-size: .55rem; color: #00aa77; font-weight: bold; }
+    .om-features { padding: .6rem .8rem; display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap; }
+    .om-feature-chip { font-size: .48rem; background: #f0fff8; border: 1px solid #00e5a0; color: #00aa77; padding: .15rem .4rem; border-radius: 2px; }
+
+    /* CONTACT */
+    #contact {
+      padding: 8rem 4rem;
+      border-top: 1px solid var(--border);
+    }
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .contact-left {}
+    .contact-description { color: #999; margin: 1.5rem 0 2.5rem; font-size: 1rem; line-height: 1.8; max-width: 40ch; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      font-size: .9rem;
+      transition: border-color .2s, background .2s;
+    }
+    .contact-link:hover { border-color: var(--accent); background: rgba(0,229,160,.04); }
+    .contact-link-icon { font-size: 1.1rem; width: 1.5rem; text-align: center; }
+    .contact-link-label { font-family: var(--mono); font-size: .75rem; color: var(--muted); display: block; margin-bottom: .1rem; }
+    .contact-link-value { font-size: .9rem; }
+    .contact-right {}
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-group label { font-family: var(--mono); font-size: .7rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+    .form-group input,
+    .form-group textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: .85rem 1rem;
+      font-family: var(--sans);
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .2s;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea { min-height: 130px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo { font-family: var(--mono); font-size: .8rem; color: var(--accent); }
+    .footer-text { font-family: var(--mono); font-size: .7rem; color: var(--muted); }
+    .footer-socials { display: flex; gap: 1.2rem; }
+    .footer-socials a { color: var(--muted); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .footer-socials a:hover { color: var(--accent); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      #hero { padding: 0 1.5rem; padding-top: 6rem; min-height: auto; padding-bottom: 5rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .terminal-card { display: none; }
+      #about { padding: 5rem 1.5rem; }
+      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      #skills { padding: 5rem 1.5rem; }
+      .skills-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      #projects { padding: 5rem 1.5rem; }
+      .project-feature { grid-template-columns: 1fr; }
+      .project-visual { min-height: 250px; }
+      .project-info { padding: 2rem; }
+      #contact { padding: 5rem 1.5rem; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
 </head>
+<body>
 
-<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="80">
+  <nav id="nav">
+    <a href="#hero" class="nav-logo">abdyleziz.dev</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-    <div id="preloader">
-        <div class="spinner"></div>
+  <!-- ═══════════ HERO ═══════════ -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <p class="hero-eyebrow">// Full-Stack Developer · Ashgabat, Turkmenistan</p>
+        <h1 class="hero-name">Abdyleziz<br><span>Sopyyev</span></h1>
+        <p class="hero-role">
+          I build <strong>web & mobile applications</strong> that solve real problems — from e-commerce platforms to service marketplaces. Focused on Laravel, PHP, and Flutter.
+        </p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn-primary">View My Work →</a>
+          <a href="#contact" class="btn-ghost">Get in Touch</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="terminal-card">
+          <div class="terminal-bar">
+            <div class="dot r"></div>
+            <div class="dot y"></div>
+            <div class="dot g"></div>
+            <span class="terminal-filename">developer.json</span>
+          </div>
+          <div class="terminal-body">
+            <span class="t-comment">// About me in JSON</span><br>
+            {<br>
+            &nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"Abdyleziz Sopyyev"</span>,<br>
+            &nbsp;&nbsp;<span class="t-key">"age"</span>: <span class="t-num">20</span>,<br>
+            &nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Ashgabat, Turkmenistan"</span>,<br>
+            &nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str">"Full-Stack Developer"</span>,<br>
+            &nbsp;&nbsp;<span class="t-key">"stack"</span>: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr">"Laravel"</span>, <span class="t-arr">"PHP"</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr">"Flutter"</span>, <span class="t-arr">"MySQL"</span><br>
+            &nbsp;&nbsp;],<br>
+            &nbsp;&nbsp;<span class="t-key">"languages"</span>: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr">"Turkmen"</span>, <span class="t-arr">"Russian"</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr">"English"</span><br>
+            &nbsp;&nbsp;],<br>
+            &nbsp;&nbsp;<span class="t-key">"open_to_work"</span>: <span class="t-bool">true</span><br>
+            }
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <header id="header">
-        <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="#home">Abdyleziz</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link active" href="#home" data-translate="navHome">Home</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="#about" data-translate="navAbout">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#skills" data-translate="navSkills">Skills</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="#projects"
-                                data-translate="navProjects">Projects</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact" data-translate="navContact">Contact</a>
-                        </li>
-                        <li class="nav-item dropdown lang-switcher">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <span class="fi fi-gb"></span> EN
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="#" onclick="setLanguage('en')"><span
-                                            class="fi fi-gb me-2"></span>English</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="setLanguage('ru')"><span
-                                            class="fi fi-ru me-2"></span>Русский</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="setLanguage('tk')"><span
-                                            class="fi fi-tm me-2"></span>Türkmen</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <section id="home" class="d-flex align-items-center">
-        <div id="particles-js"></div>
-        <div class="container position-relative">
-            <div class="row align-items-center gy-5">
-                <div class="col-lg-6 text-center text-lg-start">
-                    <h1 class="display-2 fw-bold" data-aos="fade-up" data-translate="heroTitle">Hello, I'm Abdyleziz</h1>
-                    <h2 class="mb-4" data-aos="fade-up" data-aos-delay="200"><span data-translate="heroSubtitle">I'm
-                            a</span> <span class="typed"></span></h2>
-                    <p class="lead mb-4" data-aos="fade-up" data-aos-delay="300" data-translate="heroQuote">My interest
-                        is to create and develop useful software that can make a person's life better.</p>
-                    <a href="#contact" class="btn btn-primary btn-lg" data-aos="fade-up" data-aos-delay="400"
-                        data-translate="heroButton">Let's Connect <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-                <div class="col-lg-6 text-center" data-aos="zoom-in" data-aos-delay="500">
-                    <img src="logo.png" class="img-fluid profile-pic" alt="Abdyleziz's Profile Picture">
-                </div>
-            </div>
+  <!-- ═══════════ ABOUT ═══════════ -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="reveal">
+        <p class="section-label">01 / About</p>
+        <h2 class="section-heading">Who I am</h2>
+      </div>
+      <div class="about-text reveal">
+        <p>
+          I'm a 20-year-old developer from <strong>Ashgabat, Turkmenistan</strong>, building full-stack web applications and mobile apps. My main stack is <strong>Laravel + PHP</strong> on the backend and <strong>Flutter</strong> for cross-platform mobile apps.
+        </p>
+        <p>
+          My main project is <strong>Online Market</strong> — a full e-commerce + marketplace platform I built from scratch, supporting shops, restaurants, vacancies, second-hand listings, and car sales, with <strong>multi-language support</strong> (Turkmen, Russian, English) and regional delivery.
+        </p>
+        <p>
+          I'm driven by building things that actually get used by real people. Still learning, always growing.
+        </p>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Production App</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Languages Spoken</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">20</div>
+            <div class="stat-label">Years Old</div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <main id="main">
-        <section id="about" class="py-5">
-            <div class="container">
-                <div class="section-title text-center" data-aos="fade-up">
-                    <h2 data-translate="aboutTitle">About Me</h2>
-                </div>
-                <div class="row gx-lg-5 align-items-center">
-                    <div class="col-lg-5 about-img-container" data-aos="fade-right">
-                        <img src="assets/img/profile.jpg" class="img-fluid about-pic" alt="Abdyleziz">
-                    </div>
-                    <div class="col-lg-7 about-text-content" data-aos="fade-left" data-aos-delay="100">
-                        <h3 class="fw-bold" data-translate="aboutHeader">Full-Stack Developer & Python Enthusiast</h3>
-                        <p class="fst-italic" data-translate="aboutSubheader">A passionate developer with a strong
-                            foundation in both front-end and back-end technologies.</p>
-                        <p data-translate="aboutParagraph">My journey started with Python, building everything from
-                            desktop apps to fun games. I've since expanded into full-stack web development with Django,
-                            creating robust and scalable applications. I thrive on learning new technologies and solving
-                            complex problems, always aiming to build meaningful applications that have a positive
-                            impact.</p>
-                        <a href="#" class="btn btn-outline-primary" data-translate="aboutButton">Download CV <i
-                                class="fas fa-download ms-2"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="py-5 bg-dark">
-            <div class="container">
-                <div class="section-title text-center" data-aos="fade-up">
-                    <h2 data-translate="skillsTitle">My Skills</h2>
-                </div>
-                <div class="row text-center gy-4">
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="skill-item"><i class="fab fa-laravel skill-icon"></i>
-                            <p>Laravel</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="200">
-                        <div class="skill-item"><i class="fab fa-php skill-icon"></i>
-                            <p>Php</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="skill-item"><i class="fab fa-python skill-icon"></i>
-                            <p>Python</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="skill-item"><i class="fa-brands fa-dart-lang skill-icon"></i>
-                            <p>Dart</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="200">
-                        <div class="skill-item"><i class="fa-brands fa-flutter skill-icon"></i>
-                            <p>Flutter</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="300">
-                        <div class="skill-item"><i class="fab fa-html5 skill-icon"></i>
-                            <p>HTML5</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="400">
-                        <div class="skill-item"><i class="fab fa-css3-alt skill-icon"></i>
-                            <p>CSS3</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="300">
-                        <div class="skill-item"><i class="fab fa-bootstrap skill-icon"></i>
-                            <p>Bootstrap</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="500">
-                        <div class="skill-item"><i class="fab fa-js-square skill-icon"></i>
-                            <p>JavaScript</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="700">
-                        <div class="skill-item"><i class="fa-brands fa-git skill-icon"></i>
-                            <p>Git & GitHub</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="800">
-                        <div class="skill-item"><i class="fas fa-database skill-icon"></i>
-                            <p>MySQL & PostgreSQL</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="800">
-                        <div class="skill-item"><i class="fas fa-server skill-icon"></i>
-                            <p>Apache & Nginx</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="py-5">
-            <div class="container">
-                <div class="section-title text-center" data-aos="fade-up">
-                    <h2 data-translate="projectsTitle">My Projects</h2>
-                </div>
-
-                <h3 class="projects-subtitle" data-aos="fade-up" data-translate="projectsProduction">Production Sites
-                </h3>
-                <div class="row gy-5 justify-content-center">
-                    <!-- Sanly Bazar Mockup -->
-                    <div class="col-lg-10 col-xl-9" data-aos="fade-up" data-aos-delay="100">
-                        <h4 class="text-center mb-3">Sanly Bazar</h4>
-                        <a href="https://sanlybazar.alemtilsimat.com/" target="_blank" class="device-mockup-link">
-                            <div class="device-mockup">
-                                <div class="mockup-header">
-                                    <div class="mockup-dots"><span></span><span></span><span></span></div>
-                                    <div class="mockup-url">sanlybazar.alemtilsimat.com</div>
-                                </div>
-                                <div class="mockup-screen"><img src="assets/img/sanlybazar.png"
-                                        alt="Sanly Bazar Homepage Screenshot"></div>
-                                <div class="mockup-footer"><span data-translate="visitLiveSite"><i
-                                            class="fas fa-external-link-alt me-2"></i>Visit Live Site</span></div>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Turkmen Travel Mockup -->
-                    <div class="col-lg-10 col-xl-9" data-aos="fade-up" data-aos-delay="200">
-                        <h4 class="text-center mb-3">Turkmen Travel</h4>
-                        <a href="https://turkmentravels.com/" target="_blank" class="device-mockup-link">
-                            <div class="device-mockup">
-                                <div class="mockup-header">
-                                    <div class="mockup-dots"><span></span><span></span><span></span></div>
-                                    <div class="mockup-url">turkmentravels.com</div>
-                                </div>
-                                <div class="mockup-screen"><img src="assets/img/turkmentravel.png"
-                                        alt="Turkmen Travel Homepage Screenshot"></div>
-                                <div class="mockup-footer"><span data-translate="visitLiveSite"><i
-                                            class="fas fa-external-link-alt me-2"></i>Visit Live Site</span></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <hr class="projects-divider">
-
-                <h3 class="projects-subtitle" data-aos="fade-up" data-translate="projectsOther">Other Projects & Landing
-                    Pages</h3>
-
-                <!-- OTHER PROJECTS MOCKUPS (REPLACES SWIPER) -->
-                <div class="row gy-5 justify-content-center">
-                    <!-- Prestige Home Mockup -->
-                    <div class="col-lg-10 col-xl-9" data-aos="fade-up" data-aos-delay="100">
-                        <h4 class="text-center mb-3">Prestige Home</h4>
-                        <a href="https://atamyrat2005.github.io/prestigehometm.github.io/" target="_blank"
-                            class="device-mockup-link">
-                            <div class="device-mockup">
-                                <div class="mockup-header">
-                                    <div class="mockup-dots"><span></span><span></span><span></span></div>
-                                    <div class="mockup-url">mad808.github.io</div>
-                                </div>
-                                <div class="mockup-screen"><img src="assets/img/prestige-home.png"
-                                        alt="Prestige Home Screenshot"></div>
-                                <div class="mockup-footer"><span data-translate="visitLiveSite"><i
-                                            class="fas fa-external-link-alt me-2"></i>Visit Live Site</span></div>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Hytay Haryt Mockup -->
-                    <div class="col-lg-10 col-xl-9" data-aos="fade-up" data-aos-delay="200">
-                        <h4 class="text-center mb-3">Hytay Haryt</h4>
-                        <a href="https://atamyrat2005.github.io/hytayharyt/" target="_blank" class="device-mockup-link">
-                            <div class="device-mockup">
-                                <div class="mockup-header">
-                                    <div class="mockup-dots"><span></span><span></span><span></span></div>
-                                    <div class="mockup-url">mad808.github.io</div>
-                                </div>
-                                <div class="mockup-screen"><img src="assets/img/hytay-haryt.png"
-                                        alt="Hytay Haryt Screenshot"></div>
-                                <div class="mockup-footer"><span data-translate="visitLiveSite"><i
-                                            class="fas fa-external-link-alt me-2"></i>Visit Live Site</span></div>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Cyber Security Mockup -->
-                    <div class="col-lg-10 col-xl-9" data-aos="fade-up" data-aos-delay="300">
-                        <h4 class="text-center mb-3">Cyber Security</h4>
-                        <a href="https://atamyrat2005.github.io/Cyber-security/" target="_blank"
-                            class="device-mockup-link">
-                            <div class="device-mockup">
-                                <div class="mockup-header">
-                                    <div class="mockup-dots"><span></span><span></span><span></span></div>
-                                    <div class="mockup-url">mad808.github.io</div>
-                                </div>
-                                <div class="mockup-screen"><img src="assets/img/cyber-security.png"
-                                        alt="Cyber Security Screenshot"></div>
-                                <div class="mockup-footer"><span data-translate="visitLiveSite"><i
-                                            class="fas fa-external-link-alt me-2"></i>Visit Live Site</span></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="py-5 bg-dark">
-            <div class="container">
-                <div class="section-title text-center" data-aos="fade-up">
-                    <h2 data-translate="contactTitle">Contact Me</h2>
-                    <p data-translate="contactSubtitle">Have a question or want to work together? Let's talk.</p>
-                </div>
-                <div class="row gy-4">
-                    <div class="col-lg-4">
-                        <div class="contact-info-container">
-                            <div class="info-box" data-aos="fade-up" data-aos-delay="100"><i
-                                    class="fas fa-envelope"></i>
-                                <div>
-                                    <h3 data-translate="contactEmail">Email</h3>
-                                    <p>mad300905@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="info-box" data-aos="fade-up" data-aos-delay="200"><i class="fas fa-phone"></i>
-                                <div>
-                                    <h3 data-translate="contactPhone">Phone</h3>
-                                    <p>+993 62 24 07 74</p>
-                                </div>
-                            </div>
-                            <div class="info-box" data-aos="fade-up" data-aos-delay="300"><i
-                                    class="fas fa-map-marker-alt"></i>
-                                <div>
-                                    <h3 data-translate="contactLocation">Location</h3>
-                                    <p>Ashgabat, Turkmenistan</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8" data-aos="fade-up" data-aos-delay="400">
-                        <form action="https://api.web3forms.com/submit" method="POST" role="form"
-                            class="php-email-form">
-                            <input type="hidden" name="access_key" value="48692453-7d72-4067-8b08-92f2ea37e10c">
-                            <input type="hidden" name="redirect" value="https://mad808.github.io/success.html">
-                            <input type="hidden" name="from_name" value="Atamyrat's Portfolio">
-                            <input type="hidden" name="subject" value="New Contact Form Submission">
-                            <div class="row">
-                                <div class="col-md-6 form-group mb-3"><input type="text" name="name"
-                                        class="form-control" placeholder="Your Name" required
-                                        data-translate="formName,placeholder"></div>
-                                <div class="col-md-6 form-group mb-3"><input type="email" class="form-control"
-                                        name="email" placeholder="Your Email" required
-                                        data-translate="formEmail,placeholder"></div>
-                            </div>
-
-                            <!-- NEW PHONE NUMBER FIELD -->
-                            <div class="form-group mb-3">
-                                <input type="tel" class="form-control" name="phone" placeholder="Your Phone (Optional)"
-                                    data-translate="formPhone,placeholder">
-                            </div>
-
-                            <div class="form-group mb-3"><input type="text" class="form-control" name="message_subject"
-                                    placeholder="Subject" required data-translate="formSubject,placeholder"></div>
-                            <div class="form-group mb-3"><textarea class="form-control" name="message" rows="5"
-                                    placeholder="Message" required data-translate="formMessage,placeholder"></textarea>
-                            </div>
-                            <div class="text-center"><button type="submit" class="btn btn-primary"
-                                    data-translate="formButton">Send Message</button></div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer id="footer" class="text-white text-center py-4">
-        <div class="container">
-            <div class="social-links mb-3">
-                <a href="https://t.me/S_EZIZ" class="telegram"><i class="fab fa-telegram"></i></a>
-                <a href="https://www.instagram.com/e_sopyev?igsh=MW5nMTI3eWl0bmN6dA==" class="instagram" target="_blank"><i
-                        class="fab fa-instagram"></i></a>
-                <a href="https://github.com/mad808" class="github" target="_blank"><i
-                        class="fab fa-github"></i></a>
-            </div>
-            <span data-translate="footerCopyright">© Copyright <strong><span>Abdyleziz</span></strong>. All Rights
-                Reserved</span>
+  <!-- ═══════════ SKILLS ═══════════ -->
+  <section id="skills">
+    <div class="skills-inner">
+      <div class="skills-header reveal">
+        <div>
+          <p class="section-label">02 / Skills</p>
+          <h2 class="section-heading">Tech Stack</h2>
         </div>
-    </footer>
+      </div>
+      <div class="skills-grid reveal">
+        <div class="skill-card">
+          <div class="skill-icon-text">🐘</div>
+          <div class="skill-name">PHP</div>
+          <div class="skill-type">Backend Language</div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon-text">⚡</div>
+          <div class="skill-name">Laravel</div>
+          <div class="skill-type">PHP Framework</div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon-text">🐬</div>
+          <div class="skill-name">MySQL</div>
+          <div class="skill-type">Database</div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon-text">📱</div>
+          <div class="skill-name">Flutter</div>
+          <div class="skill-type">Mobile · Dart</div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon-text">🌐</div>
+          <div class="skill-name">HTML / CSS</div>
+          <div class="skill-type">Frontend</div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon-text">🟨</div>
+          <div class="skill-name">JavaScript</div>
+          <div class="skill-type">Frontend</div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:65%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon-text">🔷</div>
+          <div class="skill-name">Bootstrap</div>
+          <div class="skill-type">CSS Framework</div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon-text">🔀</div>
+          <div class="skill-name">Git / GitHub</div>
+          <div class="skill-type">Version Control</div>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:72%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- SCRIPTS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="main.js"></script>
+  <!-- ═══════════ PROJECTS ═══════════ -->
+  <section id="projects">
+    <div class="projects-inner">
+      <div class="projects-header reveal">
+        <p class="section-label">03 / Projects</p>
+        <h2 class="section-heading">What I've Built</h2>
+      </div>
 
+      <!-- ONLINE MARKET — main project -->
+      <div class="project-feature reveal">
+        <div class="project-info">
+          <div class="project-tag">🚀 Live Production · 2025–2026</div>
+          <h3 class="project-title">Online Market</h3>
+          <p class="project-desc">
+            A full e-commerce &amp; marketplace platform built for Turkmenistan. Supports shops, restaurants, service providers, vacancies, second-hand listings, and car sales. Multi-language (Turkmen / Russian / English), regional delivery selection, live chat, and a complete admin panel.
+          </p>
+          <div class="project-tech">
+            <span class="tech-badge">Laravel</span>
+            <span class="tech-badge">PHP</span>
+            <span class="tech-badge">MySQL</span>
+            <span class="tech-badge">Bootstrap</span>
+            <span class="tech-badge">JS</span>
+            <span class="tech-badge">Multi-lang</span>
+          </div>
+          <div class="project-links">
+            <a href="http://online-market.alwaysdata.net/" target="_blank" class="btn-primary">Live Site ↗</a>
+            <a href="https://github.com/mad808" target="_blank" class="btn-ghost">GitHub →</a>
+          </div>
+        </div>
+        <div class="project-visual">
+          <div class="browser-mockup">
+            <div class="browser-bar">
+              <div class="browser-dots">
+                <span style="background:#ff5f57"></span>
+                <span style="background:#febc2e"></span>
+                <span style="background:#28c840"></span>
+              </div>
+              <div class="browser-url">online-market.alwaysdata.net</div>
+            </div>
+            <div class="browser-content">
+              <div class="om-sim">
+                <div class="om-header-sim">
+                  <span class="om-logo-sim">ONLINE MARKET</span>
+                  <div class="om-nav-sim">
+                    <span>Harytlar</span><span>Brendler</span><span>Iş ýerleri</span>
+                  </div>
+                </div>
+                <div class="om-hero-sim">
+                  <div class="om-title-sim">Iň oňat harytlar</div>
+                  <div class="om-sub-sim">online-market.alwaysdata.net</div>
+                  <div class="om-cats-sim">
+                    <span class="om-cat">🏪 Dükanlar</span>
+                    <span class="om-cat">🍽 Restoranlar</span>
+                    <span class="om-cat">🔧 Hyzmatlar</span>
+                  </div>
+                </div>
+                <div class="om-products-sim">
+                  <div class="om-product"><div class="om-product-img"></div><div class="om-product-name">Product #1</div><div class="om-product-price">1 800 m.</div></div>
+                  <div class="om-product"><div class="om-product-img" style="background:linear-gradient(135deg,#ffe0e0,#fff0f0)"></div><div class="om-product-name">Product #2</div><div class="om-product-price">2 630 m.</div></div>
+                  <div class="om-product"><div class="om-product-img" style="background:linear-gradient(135deg,#e0f0ff,#f0f8ff)"></div><div class="om-product-name">Product #3</div><div class="om-product-price">2 932 m.</div></div>
+                </div>
+                <div class="om-features">
+                  <span class="om-feature-chip">🛒 Cart</span>
+                  <span class="om-feature-chip">❤️ Favorites</span>
+                  <span class="om-feature-chip">📦 Orders</span>
+                  <span class="om-feature-chip">🌍 3 Languages</span>
+                  <span class="om-feature-chip">🚗 Cars</span>
+                  <span class="om-feature-chip">💬 Chat</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- more projects note -->
+      <div style="margin-top:2rem; padding:1.5rem 2rem; border:1px dashed #2a2a2a; display:flex; align-items:center; justify-content:space-between;" class="reveal">
+        <div>
+          <p style="font-family:var(--mono);font-size:.75rem;color:var(--muted);">More projects coming soon — currently working on new ideas.</p>
+        </div>
+        <a href="https://github.com/mad808" target="_blank" class="btn-ghost" style="font-size:.72rem;">See GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CONTACT ═══════════ -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-left reveal">
+        <p class="section-label">04 / Contact</p>
+        <h2 class="section-heading">Let's talk</h2>
+        <p class="contact-description">
+          Open to freelance projects, collaborations, or just a good tech conversation. Based in Ashgabat but working with people globally.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:mad300905@gmail.com" class="contact-link">
+            <span class="contact-link-icon">✉️</span>
+            <div>
+              <span class="contact-link-label">Email</span>
+              <span class="contact-link-value">mad300905@gmail.com</span>
+            </div>
+          </a>
+          <a href="https://t.me/S_EZIZ" target="_blank" class="contact-link">
+            <span class="contact-link-icon">✈️</span>
+            <div>
+              <span class="contact-link-label">Telegram</span>
+              <span class="contact-link-value">@S_EZIZ</span>
+            </div>
+          </a>
+          <a href="https://wa.me/99362457341" target="_blank" class="contact-link">
+            <span class="contact-link-icon">💬</span>
+            <div>
+              <span class="contact-link-label">WhatsApp</span>
+              <span class="contact-link-value">+993 62 45 73 41</span>
+            </div>
+          </a>
+          <a href="https://github.com/mad808" target="_blank" class="contact-link">
+            <span class="contact-link-icon">🐙</span>
+            <div>
+              <span class="contact-link-label">GitHub</span>
+              <span class="contact-link-value">github.com/mad808</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right reveal">
+        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="48692453-7d72-4067-8b08-92f2ea37e10c">
+          <input type="hidden" name="redirect" value="https://mad808.github.io/success.html">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" name="email" placeholder="your@email.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" name="subject" placeholder="What's this about?" required>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" placeholder="Tell me about your project or idea..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer>
+    <span class="footer-logo">abdyleziz.dev</span>
+    <span class="footer-text">© 2026 Abdyleziz Sopyyev · Ashgabat, Turkmenistan</span>
+    <div class="footer-socials">
+      <a href="https://github.com/mad808" target="_blank">GitHub</a>
+      <a href="https://t.me/S_EZIZ" target="_blank">Telegram</a>
+      <a href="https://www.instagram.com/e_sopyev" target="_blank">Instagram</a>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
 </body>
-
 </html>
