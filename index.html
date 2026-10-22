@@ -3,419 +3,656 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abdyleziz Sopyyev — Developer</title>
+  <title>Abdyleziz Sopyyev — Full-Stack Engineer &amp; Systems Architect</title>
   
-  <!-- CDN Dependencies -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome & Flag Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.2/css/flag-icons.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="logo.png" />
 </head>
 <body>
 
-  <!-- Preloader -->
-  <div id="preloader">
-    <div class="spinner"></div>
-  </div>
+  <!-- Background Animated Energy Grid Canvas -->
+  <canvas id="energy-canvas"></canvas>
+
+  <!-- Ambient Glow Blobs -->
+  <div class="ambient-glow glow-top"></div>
+  <div class="ambient-glow glow-middle"></div>
+  <div class="ambient-glow glow-bottom"></div>
+
+  <!-- Custom Interactive Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- ═══════════ NAVIGATION ═══════════ -->
-  <nav id="nav">
-    <a href="#hero" class="nav-logo">abdyleziz.dev</a>
-    <div class="nav-menu">
-      <ul class="nav-links">
-        <li><a href="#about" data-translate="navAbout">About</a></li>
-        <li><a href="#skills" data-translate="navSkills">Skills</a></li>
-        <li><a href="#projects" data-translate="navProjects">Projects</a></li>
-        <li><a href="#contact" data-translate="navContact">Contact</a></li>
-      </ul>
-      
-      <!-- Premium language selection -->
-      <div class="dropdown lang-switcher">
-        <button class="btn dropdown-toggle" type="button" id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="fi fi-gb"></span> EN
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
-          <li><a class="dropdown-item" href="#" onclick="setLanguage('en'); return false;"><span class="fi fi-gb"></span> EN</a></li>
-          <li><a class="dropdown-item" href="#" onclick="setLanguage('ru'); return false;"><span class="fi fi-ru"></span> RU</a></li>
-          <li><a class="dropdown-item" href="#" onclick="setLanguage('tk'); return false;"><span class="fi fi-tm"></span> TK</a></li>
+  <header class="site-header" id="header">
+    <div class="wrap header-inner">
+      <a href="#hero" class="brand">
+        <div class="brand-monogram">AS</div>
+        <div class="brand-text">
+          <span class="brand-name">Abdyleziz Sopyyev</span>
+          <span class="brand-sub"><i class="status-indicator"></i> Available for projects</span>
+        </div>
+      </a>
+
+      <nav class="nav-desktop">
+        <ul class="nav-links">
+          <li><a href="#about" data-i18n="navAbout">About</a></li>
+          <li><a href="#projects" data-i18n="navProjects">Projects</a></li>
+          <li><a href="#skills" data-i18n="navSkills">Stack</a></li>
+          <li><a href="#contact" data-i18n="navContact">Contact</a></li>
         </ul>
-      </div>
+
+        <!-- Language Switcher -->
+        <div class="lang-picker">
+          <button class="lang-btn" id="langToggle" aria-expanded="false">
+            <span class="fi fi-gb" id="currentFlag"></span>
+            <span id="currentLangLabel">EN</span>
+            <i class="fa-solid fa-chevron-down arrow-icon"></i>
+          </button>
+          <ul class="lang-dropdown" id="langMenu">
+            <li onclick="setLanguage('en')"><span class="fi fi-gb"></span> English</li>
+            <li onclick="setLanguage('ru')"><span class="fi fi-ru"></span> Русский</li>
+            <li onclick="setLanguage('tk')"><span class="fi fi-tm"></span> Türkmençe</li>
+          </ul>
+        </div>
+
+        <a href="#contact" class="btn btn-primary nav-cta" data-i18n="navCta">Let's Talk</a>
+      </nav>
+
+      <button class="burger" id="burgerBtn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+      </button>
     </div>
-  </nav>
+  </header>
 
-  <!-- ═══════════ HERO ═══════════ -->
-  <section id="hero">
-    <div id="particles-js"></div>
-    <div class="hero-grid">
-      <div class="hero-left" data-aos="fade-up" data-aos-delay="100">
-        <p class="hero-eyebrow" data-translate="heroEyebrow">// Full-Stack Developer · Ashgabat, Turkmenistan</p>
-        <h1 class="hero-name">Abdyleziz<br><span>Sopyyev</span></h1>
-        <p class="hero-role">
-          <span data-translate="heroSubtitle">I'm a</span> <span class="typed"></span>.<br>
-          <span data-translate="heroQuote">I design and build high-performance web applications and cross-platform mobile apps that solve real-world problems.</span>
-        </p>
-        <div class="hero-cta">
-          <a href="#projects" class="btn-primary" data-translate="heroViewWork">View My Work →</a>
-          <a href="#contact" class="btn-ghost" data-translate="heroGetInTouch">Get in Touch</a>
-        </div>
-      </div>
-      <div class="hero-right" data-aos="fade-up" data-aos-delay="300">
-        <div class="terminal-card">
-          <div class="terminal-bar">
-            <div class="dot r"></div>
-            <div class="dot y"></div>
-            <div class="dot g"></div>
-            <span class="terminal-filename" data-translate="terminalHeader">developer.json</span>
-          </div>
-          <div class="terminal-body">
-            <span class="t-comment">// About me in JSON</span><br>
-            {<br>
-            &nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"Abdyleziz Sopyyev"</span>,<br>
-            &nbsp;&nbsp;<span class="t-key">"age"</span>: <span class="t-num">20</span>,<br>
-            &nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Ashgabat, Turkmenistan"</span>,<br>
-            &nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-str" data-translate="terminalRole">"Full-Stack Developer"</span>,<br>
-            &nbsp;&nbsp;<span class="t-key">"stack"</span>: [<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr">"Laravel"</span>, <span class="t-arr">"PHP"</span>,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr">"Flutter"</span>, <span class="t-arr">"MySQL"</span><br>
-            &nbsp;&nbsp;],<br>
-            &nbsp;&nbsp;<span class="t-key">"languages"</span>: [<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr" data-translate="terminalLang1">"Turkmen"</span>, <span class="t-arr" data-translate="terminalLang2">"Russian"</span>,<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-arr" data-translate="terminalLang3">"English"</span><br>
-            &nbsp;&nbsp;],<br>
-            &nbsp;&nbsp;<span class="t-key">"open_to_work"</span>: <span class="t-bool">true</span><br>
-            }
-          </div>
-        </div>
-      </div>
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <ul class="mobile-links">
+      <li><a href="#about" onclick="closeMenu()" data-i18n="navAbout">About</a></li>
+      <li><a href="#projects" onclick="closeMenu()" data-i18n="navProjects">Projects</a></li>
+      <li><a href="#skills" onclick="closeMenu()" data-i18n="navSkills">Stack</a></li>
+      <li><a href="#contact" onclick="closeMenu()" data-i18n="navContact">Contact</a></li>
+    </ul>
+    <div class="mobile-lang">
+      <button onclick="setLanguage('en'); closeMenu()"><span class="fi fi-gb"></span> EN</button>
+      <button onclick="setLanguage('ru'); closeMenu()"><span class="fi fi-ru"></span> RU</button>
+      <button onclick="setLanguage('tk'); closeMenu()"><span class="fi fi-tm"></span> TK</button>
     </div>
-  </section>
+  </div>
 
-  <!-- ═══════════ ABOUT ═══════════ -->
-  <section id="about">
-    <div class="about-inner">
-      <div data-aos="fade-up">
-        <p class="section-label" data-translate="aboutTitle">01 / About</p>
-        <h2 class="section-heading" data-translate="aboutHeading">Who I am</h2>
-      </div>
-      <div class="about-text" data-aos="fade-up" data-aos-delay="200">
-        <p data-translate="aboutParagraph1">
-          I'm a 20-year-old developer from <strong>Ashgabat, Turkmenistan</strong>, building full-stack web applications and mobile apps. My main stack is <strong>Laravel + PHP</strong> on the backend and <strong>Flutter</strong> for cross-platform mobile apps.
-        </p>
-        <p data-translate="aboutParagraph2">
-          My main project is <strong>Online Market</strong> — a full e-commerce + marketplace platform I built from scratch, supporting shops, restaurants, vacancies, second-hand listings, and car sales, with <strong>multi-language support</strong> (Turkmen, Russian, English) and regional delivery.
-        </p>
-        <div class="stat-row">
-          <div class="stat-item">
-            <div class="stat-num">1</div>
-            <div class="stat-label" data-translate="statAppLabel">Production App</div>
+  <main>
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="hero-section" id="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span data-i18n="heroBadge">Ashgabat, Turkmenistan &bull; Born 2005</span>
           </div>
-          <div class="stat-item">
-            <div class="stat-num">3</div>
-            <div class="stat-label" data-translate="statLangLabel">Languages Spoken</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num">20</div>
-            <div class="stat-label" data-translate="statAgeLabel">Years Old</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ═══════════ SKILLS ═══════════ -->
-  <section id="skills">
-    <div class="skills-inner">
-      <div class="skills-header" data-aos="fade-up">
-        <p class="section-label" data-translate="skillsTitle">02 / Skills</p>
-        <h2 class="section-heading" data-translate="skillsHeading">Tech Stack</h2>
-      </div>
-      <div class="skills-grid" data-aos="fade-up" data-aos-delay="100">
-        <div class="skill-card">
-          <div class="skill-icon-text">🐘</div>
-          <div class="skill-name">PHP</div>
-          <div class="skill-type">Backend Language</div>
-          <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon-text">⚡</div>
-          <div class="skill-name">Laravel</div>
-          <div class="skill-type">PHP Framework</div>
-          <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon-text">🐬</div>
-          <div class="skill-name">MySQL</div>
-          <div class="skill-type">Database</div>
-          <div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon-text">📱</div>
-          <div class="skill-name">Flutter</div>
-          <div class="skill-type">Mobile · Dart</div>
-          <div class="skill-bar"><div class="skill-bar-fill" style="width:70%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon-text">🌐</div>
-          <div class="skill-name">HTML / CSS</div>
-          <div class="skill-type">Frontend</div>
-          <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon-text">🟨</div>
-          <div class="skill-name">JavaScript</div>
-          <div class="skill-type">Frontend</div>
-          <div class="skill-bar"><div class="skill-bar-fill" style="width:65%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon-text">🔷</div>
-          <div class="skill-name">Bootstrap</div>
-          <div class="skill-type">CSS Framework</div>
-          <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
-        </div>
-        <div class="skill-card">
-          <div class="skill-icon-text">🔀</div>
-          <div class="skill-name">Git / GitHub</div>
-          <div class="skill-type">Version Control</div>
-          <div class="skill-bar"><div class="skill-bar-fill" style="width:72%"></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
+          <h1 class="hero-title">
+            Engineering <span class="highlight-italic">scalable</span> platforms &amp; <span class="highlight-orange">intelligent</span> systems.
+          </h1>
 
-  <!-- ═══════════ PROJECTS ═══════════ -->
-  <section id="projects">
-    <div class="projects-inner">
-      <div class="projects-header" data-aos="fade-up">
-        <p class="section-label" data-translate="projectsTitle">03 / Projects</p>
-        <h2 class="section-heading" data-translate="projectsHeading">What I've Built</h2>
-      </div>
-
-      <!-- PROJECT 1: ONLINE MARKET (Primary highlight) -->
-      <div class="project-feature mb-5" data-aos="fade-up">
-        <div class="project-info">
-          <div class="project-tag" data-translate="projectTagLive">🚀 Live Production · 2025–2026</div>
-          <h3 class="project-title" data-translate="projectTitleOM">Online Market</h3>
-          <p class="project-desc" data-translate="projectDescOM">
-            A full e-commerce &amp; marketplace platform built for Turkmenistan. Supports shops, restaurants, service providers, vacancies, second-hand listings, and car sales. Multi-language (Turkmen / Russian / English), regional delivery selection, live chat, and a complete admin panel.
+          <p class="hero-lead">
+            <span data-i18n="heroSubtitle">I'm Abdyleziz — crafting high-throughput web architectures, cross-platform mobile products, and automated algorithms since 2023.</span>
           </p>
-          <div class="project-tech">
-            <span class="tech-badge">Laravel</span>
-            <span class="tech-badge">PHP</span>
-            <span class="tech-badge">MySQL</span>
-            <span class="tech-badge">Bootstrap</span>
-            <span class="tech-badge">JS</span>
-            <span class="tech-badge">Multi-lang</span>
+
+          <div class="dynamic-role-container">
+            <span class="terminal-prefix">&gt;</span> <span class="typed-text" id="typedElement"></span><span class="cursor-blink">|</span>
           </div>
-          <div class="project-links">
-            <a href="http://online-market.alwaysdata.net/" target="_blank" class="btn-primary" data-translate="btnLiveSite">Live Site ↗</a>
-            <a href="https://github.com/mad808" target="_blank" class="btn-ghost" data-translate="btnGitHub">GitHub →</a>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">
+              <span data-i18n="btnViewWork">Explore Portfolio</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="https://t.me/S_EZIZ" target="_blank" class="btn btn-secondary">
+              <i class="fa-brands fa-telegram"></i>
+              <span>Telegram</span>
+            </a>
+          </div>
+
+          <div class="hero-social-strip">
+            <a href="https://github.com/mad808" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://t.me/S_EZIZ" target="_blank" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://www.instagram.com/e_sopyev" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="mailto:mad300905@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
           </div>
         </div>
-        <div class="project-visual">
-          <div class="browser-mockup">
-            <div class="browser-bar">
-              <div class="browser-dots">
-                <span style="background:#ff5f57"></span>
-                <span style="background:#febc2e"></span>
-                <span style="background:#28c840"></span>
+
+        <!-- Terminal Widget -->
+        <div class="hero-terminal-wrap" data-tilt>
+          <div class="terminal-card">
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <span class="t-dot close"></span>
+                <span class="t-dot min"></span>
+                <span class="t-dot exp"></span>
               </div>
-              <div class="browser-url">online-market.alwaysdata.net</div>
+              <div class="terminal-title">eziz@engineer: ~/profile.json</div>
+              <div class="terminal-lang">json</div>
             </div>
-            <div class="browser-content">
-              <div class="om-sim">
-                <div class="om-header-sim">
-                  <span class="om-logo-sim">ONLINE MARKET</span>
-                  <div class="om-nav-sim">
-                    <span>Harytlar</span><span>Brendler</span><span>Iş ýerleri</span>
+            <pre class="terminal-code"><code>{
+  <span class="json-key">"name"</span>: <span class="json-str">"Abdyleziz Sopyyev"</span>,
+  <span class="json-key">"born"</span>: <span class="json-num">2005</span>,
+  <span class="json-key">"location"</span>: <span class="json-str">"Ashgabat, Turkmenistan"</span>,
+  <span class="json-key">"dev_since"</span>: <span class="json-num">2023</span>,
+  <span class="json-key">"spoken_languages"</span>: [
+    <span class="json-str">"Turkmen"</span>, <span class="json-str">"Russian"</span>,
+    <span class="json-str">"English"</span>, <span class="json-str">"Turkish"</span>
+  ],
+  <span class="json-key">"core_backend"</span>: [
+    <span class="json-str">"Laravel"</span>, <span class="json-str">"PHP"</span>, <span class="json-str">"Node.js"</span>
+  ],
+  <span class="json-key">"core_frontend"</span>: [
+    <span class="json-str">"React"</span>, <span class="json-str">"Vue"</span>, <span class="json-str">"Next.js"</span>, <span class="json-str">"Nuxt"</span>
+  ],
+  <span class="json-key">"mobile"</span>: <span class="json-str">"Flutter &amp; Dart"</span>,
+  <span class="json-key">"automation"</span>: [<span class="json-str">"MQL5 Bots"</span>, <span class="json-str">"Python"</span>],
+  <span class="json-key">"focus"</span>: [<span class="json-str">"DevOps"</span>, <span class="json-str">"Cybersecurity"</span>, <span class="json-str">"Machine Learning"</span>],
+  <span class="json-key">"available"</span>: <span class="json-bool">true</span>
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ RUNNING MARQUEE ═══════════ -->
+    <div class="marquee-strip">
+      <div class="marquee-track">
+        <span>LARAVEL</span><i class="marquee-star">✦</i>
+        <span>REACT.JS</span><i class="marquee-star">✦</i>
+        <span>VUE.JS</span><i class="marquee-star">✦</i>
+        <span>NEXT.JS</span><i class="marquee-star">✦</i>
+        <span>NUXT</span><i class="marquee-star">✦</i>
+        <span>FLUTTER</span><i class="marquee-star">✦</i>
+        <span>POSTGRESQL &amp; MYSQL</span><i class="marquee-star">✦</i>
+        <span>DEVOPS &amp; DOCKER</span><i class="marquee-star">✦</i>
+        <span>PYTHON &amp; MQL5 AUTOMATION</span><i class="marquee-star">✦</i>
+        <span>CYBERSECURITY &amp; ML</span><i class="marquee-star">✦</i>
+        <span>LARAVEL</span><i class="marquee-star">✦</i>
+        <span>REACT.JS</span><i class="marquee-star">✦</i>
+        <span>VUE.JS</span><i class="marquee-star">✦</i>
+        <span>NEXT.JS</span><i class="marquee-star">✦</i>
+        <span>NUXT</span><i class="marquee-star">✦</i>
+      </div>
+    </div>
+
+    <!-- ═══════════ METRICS STRIP ═══════════ -->
+    <section class="metrics-section">
+      <div class="wrap metrics-grid">
+        <div class="metric-item">
+          <span class="metric-number">2023</span>
+          <span class="metric-label" data-i18n="metricStart">Programming Since</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-number">3+</span>
+          <span class="metric-label" data-i18n="metricLive">Production Deployments</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-number">4</span>
+          <span class="metric-label" data-i18n="metricLanguages">Languages Spoken</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-number">20+</span>
+          <span class="metric-label" data-i18n="metricTechnologies">Frameworks &amp; Tools</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ ABOUT ═══════════ -->
+    <section class="section about-section" id="about">
+      <div class="wrap">
+        <div class="section-tag" data-i18n="aboutTag">// 01 &bull; ARCHITECTURE &amp; PASSION</div>
+        <h2 class="section-heading">
+          Building <span class="highlight-italic">resilient digital foundations</span> with high precision.
+        </h2>
+
+        <div class="about-grid">
+          <div class="about-card main-card">
+            <h3 data-i18n="aboutCard1Title">Full-Stack Craftsmanship</h3>
+            <p data-i18n="aboutCard1Text">
+              Started programming in 2023 with an obsessive commitment to mastering the entire technology stack. My daily workflow spans architecting complex relational databases in <strong>PostgreSQL &amp; MySQL</strong>, deploying production-hardened APIs in <strong>Laravel &amp; Node.js</strong>, and shaping reactive user experiences using <strong>React, Vue, Next.js, and Nuxt</strong>.
+            </p>
+            <p data-i18n="aboutCard1Sub">
+              For mobile deployment, I design unified cross-platform solutions with <strong>Flutter</strong>, guaranteeing native fidelity across both iOS and Android platforms.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-card-icon"><i class="fa-solid fa-server"></i></div>
+            <h3 data-i18n="aboutCard2Title">DevOps &amp; Infrastructure</h3>
+            <p data-i18n="aboutCard2Text">
+              Passionate about containerization, continuous integration, version control through Git and Gitea, automated servers, and creating scalable deployment environments for rapid delivery.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-card-icon"><i class="fa-solid fa-robot"></i></div>
+            <h3 data-i18n="aboutCard3Title">Bots, ML &amp; Financial Coding</h3>
+            <p data-i18n="aboutCard3Text">
+              Active developer of algorithmic trading robots with <strong>MQL5</strong>, data manipulation workflows in <strong>Python</strong>, high-speed Telegram automation bots, and continually exploring Machine Learning models.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FEATURED PROJECTS ═══════════ -->
+    <section class="section projects-section" id="projects">
+      <div class="wrap">
+        <div class="section-tag" data-i18n="projectsTag">// 02 &bull; DEPLOYED SYSTEMS</div>
+        <h2 class="section-heading">
+          Selected <span class="highlight-orange">production</span> projects.
+        </h2>
+
+        <!-- Project 1: Online Market -->
+        <article class="project-card featured" data-tilt>
+          <div class="project-info">
+            <div class="project-badge">
+              <i class="fa-solid fa-bolt"></i> <span data-i18n="proj1Badge">E-Commerce Ecosystem</span>
+            </div>
+            <h3 class="project-name">Online Market</h3>
+            <p class="project-description" data-i18n="proj1Desc">
+              A comprehensive marketplace platform engineered for the modern retail landscape in Turkmenistan. Integrates dynamic online storefronts, restaurant menus, service directories, car sales listings, job vacancies, and second-hand trading with full trilingual support (Turkmen, Russian, English) and regional delivery logistics.
+            </p>
+
+            <div class="project-tags">
+              <span>Laravel</span>
+              <span>PHP</span>
+              <span>MySQL</span>
+              <span>Live Chat</span>
+              <span>Multi-Language</span>
+              <span>REST API</span>
+            </div>
+
+            <div class="project-links">
+              <a href="https://online-market.alwaysdata.net/" target="_blank" class="btn btn-primary">
+                <span data-i18n="btnVisitProject">Launch Live Site</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <a href="https://github.com/mad808" target="_blank" class="btn btn-secondary">
+                <i class="fa-brands fa-github"></i>
+                <span>Repository</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="project-preview">
+            <div class="preview-browser">
+              <div class="browser-bar">
+                <div class="browser-dots"><span></span><span></span><span></span></div>
+                <div class="browser-address">online-market.alwaysdata.net</div>
+              </div>
+              <div class="browser-screen mockup-screen-1">
+                <div class="mockup-header">
+                  <div class="mockup-logo">ONLINE MARKET</div>
+                  <div class="mockup-nav"><span>Harytlar</span><span>Awtomobil</span><span>Iş</span></div>
+                </div>
+                <div class="mockup-hero">
+                  <div class="mockup-title">Turkmenistan's Digital Market</div>
+                  <div class="mockup-grid-cards">
+                    <div class="m-card">🛍️ <b>Dukanlar</b><span>1,200+ Haryt</span></div>
+                    <div class="m-card">🚗 <b>Awtomobil</b><span>Täze &amp; Ikinji el</span></div>
+                    <div class="m-card">💼 <b>Iş orunlary</b><span>Wakansiýalar</span></div>
                   </div>
-                </div>
-                <div class="om-hero-sim">
-                  <div class="om-title-sim">Iň oňat harytlar</div>
-                  <div class="om-sub-sim">online-market.alwaysdata.net</div>
-                  <div class="om-cats-sim">
-                    <span class="om-cat">🏪 Dükanlar</span>
-                    <span class="om-cat">🍽 Restoranlar</span>
-                    <span class="om-cat">🔧 Hyzmatlar</span>
-                  </div>
-                </div>
-                <div class="om-products-sim">
-                  <div class="om-product"><div class="om-product-img"></div><div class="om-product-name">Product #1</div><div class="om-product-price">1 800 m.</div></div>
-                  <div class="om-product"><div class="om-product-img" style="background:linear-gradient(135deg,#ffe0e0,#fff0f0)"></div><div class="om-product-name">Product #2</div><div class="om-product-price">2 630 m.</div></div>
-                  <div class="om-product"><div class="om-product-img" style="background:linear-gradient(135deg,#e0f0ff,#f0f8ff)"></div><div class="om-product-name">Product #3</div><div class="om-product-price">2 932 m.</div></div>
-                </div>
-                <div class="om-features">
-                  <span class="om-feature-chip">🛒 Cart</span>
-                  <span class="om-feature-chip">❤️ Favorites</span>
-                  <span class="om-feature-chip">📦 Orders</span>
-                  <span class="om-feature-chip">🌍 3 Languages</span>
-                  <span class="om-feature-chip">🚗 Cars</span>
-                  <span class="om-feature-chip">💬 Chat</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2: Astore TM -->
+        <article class="project-card" data-tilt>
+          <div class="project-info">
+            <div class="project-badge">
+              <i class="fa-solid fa-gem"></i> <span data-i18n="proj2Badge">Retail Flagship</span>
+            </div>
+            <h3 class="project-name">Astore TM</h3>
+            <p class="project-description" data-i18n="proj2Desc">
+              A high-end modern electronic and fashion commerce storefront featuring ultra-responsive navigation, performant inventory categorisation, swift checkout architecture, and custom administrative analytics.
+            </p>
+
+            <div class="project-tags">
+              <span>PHP / Laravel</span>
+              <span>JavaScript</span>
+              <span>MySQL</span>
+              <span>Responsive UI</span>
+              <span>Payment Workflows</span>
+            </div>
+
+            <div class="project-links">
+              <a href="http://astoretm.com/" target="_blank" class="btn btn-primary">
+                <span data-i18n="btnVisitProject">Launch Live Site</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <a href="https://github.com/mad808" target="_blank" class="btn btn-secondary">
+                <i class="fa-brands fa-github"></i>
+                <span>Codebase</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="project-preview">
+            <div class="preview-browser">
+              <div class="browser-bar">
+                <div class="browser-dots"><span></span><span></span><span></span></div>
+                <div class="browser-address">astoretm.com</div>
+              </div>
+              <div class="browser-screen mockup-screen-2">
+                <div class="mockup-header">
+                  <div class="mockup-logo">ASTORE TM</div>
+                  <div class="mockup-nav"><span>Katalog</span><span>Brendler</span><span>Aksiýalar</span></div>
+                </div>
+                <div class="mockup-hero">
+                  <div class="mockup-title">Premium Retail Experience</div>
+                  <div class="mockup-grid-cards">
+                    <div class="m-card">📱 <b>Elektronika</b><span>Smartfonlar</span></div>
+                    <div class="m-card">⚡ <b>Tizlik</b><span>Gözleg &amp; Filter</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3: Ulagym -->
+        <article class="project-card" data-tilt>
+          <div class="project-info">
+            <div class="project-badge">
+              <i class="fa-solid fa-car-side"></i> <span data-i18n="proj3Badge">Automotive Marketplace</span>
+            </div>
+            <h3 class="project-name">Ulagym</h3>
+            <p class="project-description" data-i18n="proj3Desc">
+              Specialized car portal designed for automotive vehicle listings, inspection data, model comparisons, search indexing, and customer dealership inquiries across Turkmenistan.
+            </p>
+
+            <div class="project-tags">
+              <span>Full-Stack Web</span>
+              <span>Automotive Specs</span>
+              <span>Database Query Opt.</span>
+              <span>Cloud Hosting</span>
+            </div>
+
+            <div class="project-links">
+              <a href="https://ulagym.alwaysdata.net/" target="_blank" class="btn btn-primary">
+                <span data-i18n="btnVisitProject">Launch Live Site</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <a href="https://github.com/mad808" target="_blank" class="btn btn-secondary">
+                <i class="fa-brands fa-github"></i>
+                <span>Codebase</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="project-preview">
+            <div class="preview-browser">
+              <div class="browser-bar">
+                <div class="browser-dots"><span></span><span></span><span></span></div>
+                <div class="browser-address">ulagym.alwaysdata.net</div>
+              </div>
+              <div class="browser-screen mockup-screen-3">
+                <div class="mockup-header">
+                  <div class="mockup-logo">ULAGYM</div>
+                  <div class="mockup-nav"><span>Awtoulaglar</span><span>Model</span><span>Baha</span></div>
+                </div>
+                <div class="mockup-hero">
+                  <div class="mockup-title">Automotive Hub &amp; Listings</div>
+                  <div class="mockup-grid-cards">
+                    <div class="m-card">🚘 <b>Satlyk Ulaglar</b><span>Filtrler</span></div>
+                    <div class="m-card">🔍 <b>Parametrler</b><span>Ýyly &amp; Ýagdaýy</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4: MQL5 & Python Automation Hub -->
+        <article class="project-card" data-tilt>
+          <div class="project-info">
+            <div class="project-badge">
+              <i class="fa-solid fa-chart-line"></i> <span data-i18n="proj4Badge">Algorithmic Automation</span>
+            </div>
+            <h3 class="project-name">MQL5 &amp; Python Bot Engineering</h3>
+            <p class="project-description" data-i18n="proj4Desc">
+              Custom-built automated trading robots and Telegram notifications pipelines. Calculates risk-reward metrics, monitors technical indicators, manages positions algorithmically, and broadcasts trade telemetry in real time.
+            </p>
+
+            <div class="project-tags">
+              <span>MQL5</span>
+              <span>Python</span>
+              <span>Telegram Bot API</span>
+              <span>Algorithmic Logic</span>
+              <span>Data Scraping</span>
+            </div>
+
+            <div class="project-links">
+              <a href="https://github.com/mad808" target="_blank" class="btn btn-primary">
+                <span data-i18n="btnVisitGithub">Inspect on GitHub</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="project-preview">
+            <div class="preview-browser">
+              <div class="browser-bar">
+                <div class="browser-dots"><span></span><span></span><span></span></div>
+                <div class="browser-address">terminal://mql5-runtime</div>
+              </div>
+              <div class="browser-screen mockup-screen-4">
+                <pre class="mql-code">
+// Expert Advisor Execution Loop
+void OnTick() {
+    double rsi = iRSI(_Symbol, _Period, 14, PRICE_CLOSE);
+    if(rsi &lt; 30.0 &amp;&amp; !PositionSelect(_Symbol)) {
+        ExecuteLongTrade(0.10);
+        SendTelegramAlert("LONG BUY: " + _Symbol);
+    }
+}
+                </pre>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════ SKILLS / TECH STACK ═══════════ -->
+    <section class="section skills-section" id="skills">
+      <div class="wrap">
+        <div class="section-tag" data-i18n="skillsTag">// 03 &bull; CAPABILITIES &amp; TOOLS</div>
+        <h2 class="section-heading">
+          Technical <span class="highlight-italic">arsenal</span>.
+        </h2>
+
+        <div class="skills-catalog">
+          <!-- Backend -->
+          <div class="skill-category">
+            <div class="category-header">
+              <i class="fa-solid fa-database"></i>
+              <h3 data-i18n="catBackend">Backend &amp; Architecture</h3>
+            </div>
+            <div class="skill-badges">
+              <div class="skill-pill"><i class="fa-brands fa-laravel"></i> Laravel</div>
+              <div class="skill-pill"><i class="fa-brands fa-php"></i> PHP 8.x</div>
+              <div class="skill-pill"><i class="fa-brands fa-node-js"></i> Node.js</div>
+              <div class="skill-pill"><i class="fa-brands fa-python"></i> Python</div>
+              <div class="skill-pill"><i class="fa-solid fa-coins"></i> MQL5</div>
+              <div class="skill-pill"><i class="fa-solid fa-server"></i> RESTful APIs</div>
+            </div>
+          </div>
+
+          <!-- Frontend -->
+          <div class="skill-category">
+            <div class="category-header">
+              <i class="fa-solid fa-laptop-code"></i>
+              <h3 data-i18n="catFrontend">Frontend Frameworks</h3>
+            </div>
+            <div class="skill-badges">
+              <div class="skill-pill"><i class="fa-brands fa-react"></i> React.js</div>
+              <div class="skill-pill"><i class="fa-brands fa-vuejs"></i> Vue.js</div>
+              <div class="skill-pill"><i class="fa-solid fa-forward-step"></i> Next.js</div>
+              <div class="skill-pill"><i class="fa-solid fa-mountain"></i> Nuxt.js</div>
+              <div class="skill-pill"><i class="fa-brands fa-js"></i> Modern ES6+</div>
+              <div class="skill-pill"><i class="fa-solid fa-wind"></i> Tailwind CSS</div>
+            </div>
+          </div>
+
+          <!-- Mobile -->
+          <div class="skill-category">
+            <div class="category-header">
+              <i class="fa-solid fa-mobile-screen"></i>
+              <h3 data-i18n="catMobile">Mobile Engineering</h3>
+            </div>
+            <div class="skill-badges">
+              <div class="skill-pill"><i class="fa-solid fa-feather"></i> Flutter</div>
+              <div class="skill-pill"><i class="fa-solid fa-code"></i> Dart</div>
+              <div class="skill-pill"><i class="fa-brands fa-android"></i> Android Native APIs</div>
+              <div class="skill-pill"><i class="fa-brands fa-apple"></i> iOS Compilation</div>
+            </div>
+          </div>
+
+          <!-- Databases & DevOps -->
+          <div class="skill-category">
+            <div class="category-header">
+              <i class="fa-solid fa-network-wired"></i>
+              <h3 data-i18n="catDevops">Databases, DevOps &amp; Cloud</h3>
+            </div>
+            <div class="skill-badges">
+              <div class="skill-pill"><i class="fa-solid fa-hard-drive"></i> PostgreSQL</div>
+              <div class="skill-pill"><i class="fa-solid fa-database"></i> MySQL / SQL</div>
+              <div class="skill-pill"><i class="fa-brands fa-docker"></i> Docker / DevOps</div>
+              <div class="skill-pill"><i class="fa-brands fa-git-alt"></i> Git</div>
+              <div class="skill-pill"><i class="fa-brands fa-github"></i> GitHub</div>
+              <div class="skill-pill"><i class="fa-solid fa-code-branch"></i> Gitea</div>
             </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- PROJECT 2: GOV DOC MANAGEMENT -->
-      <div class="project-feature" data-aos="fade-up">
-        <div class="project-visual">
-          <div class="browser-mockup">
-            <div class="browser-bar">
-              <div class="browser-dots">
-                <span style="background:#ff5f57"></span>
-                <span style="background:#febc2e"></span>
-                <span style="background:#28c840"></span>
-              </div>
-              <div class="browser-url">gov-docs.internal</div>
-            </div>
-            <div class="browser-content">
-              <div class="gd-sim">
-                <div class="gd-sidebar-sim">
-                  <div class="gd-logo-sim">🛡️ GOV-SECURE</div>
-                  <div class="gd-menu-sim">
-                    <span class="active">📂 Inbox</span>
-                    <span>📨 Sent</span>
-                    <span>🔒 Archive</span>
-                  </div>
-                </div>
-                <div class="gd-main-sim">
-                  <div class="gd-doc-sim">
-                    <div class="gd-doc-header">
-                      <span class="gd-badge">CLASSIFIED</span>
-                      <span class="gd-doc-id">DOC-2026-99A</span>
-                    </div>
-                    <div class="gd-doc-title">Internal Protocol Amendment</div>
-                    <div class="gd-doc-meta">From: Dept of IT &bull; To: All Admins</div>
-                    <div class="gd-doc-body">
-                      <p>System update completed. Access controls strictly enforced with role-based restrictions...</p>
-                    </div>
-                    <div class="gd-signature-sim">
-                      <span class="sig-title">Digital Signature</span>
-                      <span class="sig-hash">SHA256: 8f4e2c1a...9b3d</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="project-info">
-          <div class="project-tag" style="color:var(--accent2); background:rgba(0,102,255,.06); border:1px solid rgba(0,102,255,.2);" data-translate="projectTagOther">🔒 Secure System · 2026</div>
-          <h3 class="project-title" data-translate="projectTitleGD">Gov Doc Management</h3>
-          <p class="project-desc" data-translate="projectDescGD">
-            A secure, enterprise-grade Government Document Management & Internal Messaging System. Designed and built with Laravel to guarantee role-based access control, cryptographic document tracking, and secure departmental communications.
+    <!-- ═══════════ CONTACT ═══════════ -->
+    <section class="section contact-section" id="contact">
+      <div class="wrap contact-grid">
+        <div class="contact-info">
+          <div class="section-tag" data-i18n="contactTag">// 04 &bull; INITIATE CONTACT</div>
+          <h2 class="section-heading">
+            Let's build something <span class="highlight-orange">extraordinary</span> together.
+          </h2>
+          <p class="contact-text" data-i18n="contactLead">
+            Whether you need a full-scale e-commerce portal, custom algorithmic bot, mobile app, or backend architecture review, I am ready to collaborate.
           </p>
-          <div class="project-tech">
-            <span class="tech-badge">Laravel</span>
-            <span class="tech-badge">PHP</span>
-            <span class="tech-badge">MySQL</span>
-            <span class="tech-badge">TailwindCSS</span>
-            <span class="tech-badge">Security</span>
-          </div>
-          <div class="project-links">
-            <a href="https://github.com/mad808/gov-doc-management" target="_blank" class="btn-primary" style="background:var(--accent2); box-shadow:0 8px 24px rgba(0,102,255,.15);" data-translate="btnGitHub">GitHub →</a>
-          </div>
-        </div>
-      </div>
 
-      <!-- Additional projects dash note -->
-      <div style="margin-top:3rem; padding:1.5rem 2rem; border:1px dashed var(--border); border-radius: 6px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;" data-aos="fade-up">
-        <div>
-          <p style="font-family:var(--mono); font-size:.78rem; color:var(--muted); margin:0;" data-translate="comingSoonText">More projects coming soon — currently working on new ideas.</p>
-        </div>
-        <a href="https://github.com/mad808" target="_blank" class="btn-ghost" style="font-size:.72rem;" data-translate="seeGitHub">See GitHub →</a>
-      </div>
-    </div>
-  </section>
+          <div class="contact-channels">
+            <a href="https://t.me/S_EZIZ" target="_blank" class="channel-card">
+              <div class="channel-icon"><i class="fa-brands fa-telegram"></i></div>
+              <div class="channel-details">
+                <span class="channel-type" data-i18n="contactTelegram">Telegram Channel / Direct</span>
+                <span class="channel-val">@S_EZIZ</span>
+              </div>
+              <i class="fa-solid fa-arrow-right go-arrow"></i>
+            </a>
 
-  <!-- ═══════════ CONTACT ═══════════ -->
-  <section id="contact">
-    <div class="contact-inner">
-      <div class="contact-left" data-aos="fade-up">
-        <p class="section-label" data-translate="contactTitle">04 / Contact</p>
-        <h2 class="section-heading" data-translate="contactHeading">Let's talk</h2>
-        <p class="contact-description" data-translate="contactDescription">
-          Open to freelance projects, collaborations, or just a good tech conversation. Based in Ashgabat but working with people globally.
-        </p>
-        <div class="contact-links">
-          <a href="mailto:mad300905@gmail.com" class="contact-link">
-            <span class="contact-link-icon">✉️</span>
-            <div>
-              <span class="contact-link-label" data-translate="contactEmail">Email</span>
-              <span class="contact-link-value">mad300905@gmail.com</span>
+            <a href="mailto:mad300905@gmail.com" class="channel-card">
+              <div class="channel-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div class="channel-details">
+                <span class="channel-type" data-i18n="contactEmail">Email Address</span>
+                <span class="channel-val">mad300905@gmail.com</span>
+              </div>
+              <i class="fa-solid fa-arrow-right go-arrow"></i>
+            </a>
+
+            <a href="https://github.com/mad808" target="_blank" class="channel-card">
+              <div class="channel-icon"><i class="fa-brands fa-github"></i></div>
+              <div class="channel-details">
+                <span class="channel-type" data-i18n="contactGithub">GitHub Repositories</span>
+                <span class="channel-val">github.com/mad808</span>
+              </div>
+              <i class="fa-solid fa-arrow-right go-arrow"></i>
+            </a>
+
+            <a href="https://www.instagram.com/e_sopyev" target="_blank" class="channel-card">
+              <div class="channel-icon"><i class="fa-brands fa-instagram"></i></div>
+              <div class="channel-details">
+                <span class="channel-type" data-i18n="contactInstagram">Instagram</span>
+                <span class="channel-val">@e_sopyev</span>
+              </div>
+              <i class="fa-solid fa-arrow-right go-arrow"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-container">
+          <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" id="mainForm">
+            <input type="hidden" name="access_key" value="48692453-7d72-4067-8b08-92f2ea37e10c">
+            <input type="hidden" name="redirect" value="https://mad808.github.io/success.html">
+
+            <div class="form-row">
+              <div class="input-field">
+                <label for="name" data-i18n="formName">Your Name</label>
+                <input type="text" id="name" name="name" required placeholder="John Doe" />
+              </div>
+              <div class="input-field">
+                <label for="email" data-i18n="formEmail">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="john@example.com" />
+              </div>
             </div>
-          </a>
-          <a href="https://t.me/S_EZIZ" target="_blank" class="contact-link">
-            <span class="contact-link-icon">✈️</span>
-            <div>
-              <span class="contact-link-label" data-translate="contactTelegram">Telegram</span>
-              <span class="contact-link-value">@S_EZIZ</span>
+
+            <div class="input-field">
+              <label for="subject" data-i18n="formSubject">Subject</label>
+              <input type="text" id="subject" name="subject" required placeholder="Project Collaboration / Consultation" />
             </div>
-          </a>
-          <a href="https://wa.me/99362240774" target="_blank" class="contact-link">
-            <span class="contact-link-icon">💬</span>
-            <div>
-              <span class="contact-link-label" data-translate="contactWhatsApp">WhatsApp</span>
-              <span class="contact-link-value">+993 62 24 07 74</span>
+
+            <div class="input-field">
+              <label for="message" data-i18n="formMessage">Message</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Describe your project, objectives, or timeline..."></textarea>
             </div>
-          </a>
-          <a href="https://github.com/mad808" target="_blank" class="contact-link">
-            <span class="contact-link-icon">🐙</span>
-            <div>
-              <span class="contact-link-label" data-translate="contactGitHub">GitHub</span>
-              <span class="contact-link-value">github.com/mad808</span>
-            </div>
-          </a>
+
+            <button type="submit" class="btn btn-primary submit-btn">
+              <span data-i18n="btnSend">Transmit Message</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
         </div>
       </div>
-      <div class="contact-right" data-aos="fade-up" data-aos-delay="200">
-        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="48692453-7d72-4067-8b08-92f2ea37e10c">
-          <input type="hidden" name="redirect" value="https://mad808.github.io/success.html">
-          <div class="form-row">
-            <div class="form-group">
-              <label data-translate="formName">Name</label>
-              <input type="text" name="name" data-translate="formNamePlaceholder,placeholder" placeholder="Your name" required>
-            </div>
-            <div class="form-group">
-              <label data-translate="formEmail">Email</label>
-              <input type="email" name="email" data-translate="formEmailPlaceholder,placeholder" placeholder="your@email.com" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label data-translate="formSubject">Subject</label>
-            <input type="text" name="subject" data-translate="formSubjectPlaceholder,placeholder" placeholder="What's this about?" required>
-          </div>
-          <div class="form-group">
-            <label data-translate="formMessage">Message</label>
-            <textarea name="message" data-translate="formMessagePlaceholder,placeholder" placeholder="Tell me about your project or idea..." required></textarea>
-          </div>
-          <button type="submit" class="btn-primary" style="width:100%; justify-content:center;" data-translate="formButton">Send Message →</button>
-        </form>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- ═══════════ FOOTER ═══════════ -->
-  <footer>
-    <span class="footer-logo">abdyleziz.dev</span>
-    <span class="footer-text" data-translate="footerCopyright">© 2026 Abdyleziz Sopyyev · Ashgabat, Turkmenistan</span>
-    <div class="footer-socials">
-      <a href="https://github.com/mad808" target="_blank">GitHub</a>
-      <a href="https://t.me/S_EZIZ" target="_blank">Telegram</a>
-      <a href="https://www.instagram.com/e_sopyev" target="_blank">Instagram</a>
+  <footer class="site-footer">
+    <div class="wrap footer-wrap">
+      <div class="footer-top">
+        <div class="footer-huge-name">ABDYLEZIZ</div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          &copy; 2026 Abdyleziz Sopyyev &bull; Ashgabat, Turkmenistan. All rights reserved.
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/mad808" target="_blank">GitHub</a>
+          <a href="https://t.me/S_EZIZ" target="_blank">Telegram</a>
+          <a href="https://www.instagram.com/e_sopyev" target="_blank">Instagram</a>
+          <a href="#hero">Back to top ↑</a>
+        </div>
+      </div>
     </div>
   </footer>
 
-  <!-- Core JavaScript Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
