@@ -1,0 +1,84 @@
+/* effects.css — load AFTER style.css. Same palette, extra motion. */
+
+/* Scroll progress */
+.scroll-progress{position:fixed;top:0;left:0;width:100%;height:3px;transform-origin:0 50%;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--accent),var(--accent-light));box-shadow:0 0 14px var(--accent-glow);z-index:700}
+
+/* Cursor-following ember glow */
+.cursor-glow{position:fixed;top:0;left:0;width:600px;height:600px;border-radius:50%;pointer-events:none;z-index:-1;
+  background:radial-gradient(circle,rgba(255,107,44,.16),transparent 65%);will-change:transform}
+
+/* Header: hides on scroll down, returns on scroll up */
+.site-header{transition:transform .45s var(--ease-fluid),border-color .3s}
+.site-header.hide{transform:translateY(-100%)}
+.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease-fluid)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-links a.active{color:var(--accent-light)}
+
+/* Hero: one orchestrated load sequence */
+@keyframes rise{to{opacity:1;translate:0 0}}
+@keyframes wordIn{to{opacity:1;translate:0 0;filter:blur(0)}}
+@keyframes float{50%{translate:0 -12px}}
+@keyframes shimmer{to{background-position:200% 0}}
+@keyframes scan{to{top:120%}}
+
+.hero-content>*:not(.hero-title){opacity:0;translate:0 22px;animation:rise .9s var(--ease-fluid) forwards}
+.hero-content>:nth-child(1){animation-delay:.05s}
+.hero-content>:nth-child(3){animation-delay:.9s}
+.hero-content>:nth-child(4){animation-delay:1s}
+.hero-content>:nth-child(5){animation-delay:1.1s}
+.hero-content>:nth-child(6){animation-delay:1.2s}
+.hero-title .w{display:inline-block;opacity:0;translate:0 .55em;filter:blur(10px);
+  animation:wordIn .85s var(--ease-fluid) forwards;animation-delay:calc(.25s + var(--i)*.08s)}
+.hero-terminal-wrap{opacity:0;translate:0 30px;animation:rise 1.1s .6s var(--ease-fluid) forwards}
+.terminal-card{animation:float 7s ease-in-out 1.8s infinite}
+.highlight-orange{background:linear-gradient(90deg,var(--accent),#ffd08a,var(--accent));background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;
+  filter:drop-shadow(0 0 18px var(--accent-glow));animation:shimmer 5s linear infinite}
+
+/* Marquee */
+.marquee-strip{-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.marquee-strip:hover .marquee-track{animation-play-state:paused}
+
+/* Scroll reveal (uses `translate` so it never fights the tilt transform) */
+.rv{opacity:0;translate:0 32px;
+  transition:opacity .8s ease var(--d,0s),translate .8s var(--ease-fluid) var(--d,0s),
+  transform .35s,border-color .35s,background .3s,box-shadow .3s}
+.rv.in{opacity:1;translate:0 0}
+
+/* Cards: spotlight + glowing border that follow the pointer */
+.fx-card{position:relative}
+.fx-card::before,.fx-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  opacity:0;transition:opacity .35s}
+.fx-card::after{background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(255,107,44,.13),transparent 45%)}
+.fx-card::before{padding:1px;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),var(--accent-light),transparent 60%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.fx-card:hover::before,.fx-card:hover::after{opacity:1}
+
+/* Project previews */
+.preview-browser{transition:transform .5s var(--ease-fluid),box-shadow .5s}
+.project-card:hover .preview-browser{transform:translateY(-8px) rotate(-.8deg);
+  box-shadow:0 28px 60px rgba(0,0,0,.75),0 0 40px -8px var(--accent-glow)}
+.browser-screen{position:relative;overflow:hidden}
+.browser-screen::after{content:"";position:absolute;left:0;right:0;top:-40%;height:40%;pointer-events:none;
+  background:linear-gradient(transparent,rgba(255,107,44,.09),transparent);animation:scan 5s linear infinite}
+
+/* Skill pills + metrics */
+.skill-pill{transition:all .25s var(--ease-fluid)}
+.skill-pill:hover{box-shadow:0 8px 20px -8px var(--accent-glow)}
+.metric-number{font-variant-numeric:tabular-nums}
+
+/* Footer name fills with fire as you reach the bottom */
+.footer-huge-name{background:linear-gradient(90deg,var(--accent),var(--accent-light)) no-repeat;
+  background-size:var(--fill,0%) 100%;-webkit-background-clip:text;background-clip:text}
+
+/* Keyboard focus */
+:focus-visible{outline:2px solid var(--accent-light);outline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rv,.hero-content>*,.hero-terminal-wrap,.hero-title .w{opacity:1;translate:none;filter:none}
+}
